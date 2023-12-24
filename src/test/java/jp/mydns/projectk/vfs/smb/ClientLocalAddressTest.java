@@ -130,7 +130,7 @@ class ClientLocalAddressTest extends AbstractOptionTest {
 
         var instance = new ClientLocalAddress.Resolver().newInstance(Json.createValue("127.0.0.1"));
 
-        assertThat(instance).returns("smb:client.LocalAddress", FileOption::getName)
+        assertThat(instance).returns("smb:client.localAddress", FileOption::getName)
                 .returns(expectValue, FileOption::getValue);
 
     }
@@ -147,7 +147,7 @@ class ClientLocalAddressTest extends AbstractOptionTest {
 
         var result = instance.toString();
 
-        assertThat(result).isEqualTo("{\"smb:client.LocalAddress\":\"127.0.0.1\"}");
+        assertThat(result).isEqualTo("{\"smb:client.localAddress\":\"127.0.0.1\"}");
 
     }
 }

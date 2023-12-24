@@ -48,7 +48,7 @@ import org.apache.commons.vfs2.FileSystemOptions;
  * @since 1.0.0
  * @see BaseConfiguration#getLocalAddr()
  */
-@FileOption.Name("smb:client.LocalAddress")
+@FileOption.Name("smb:client.localAddress")
 @JcifsngOption.Name("jcifs.smb.client.laddr")
 public class ClientLocalAddress extends JcifsngStringOption {
 
