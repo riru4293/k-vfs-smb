@@ -48,7 +48,7 @@ import org.apache.commons.vfs2.FileSystemOptions;
  * @since 1.0.0
  * @see BaseConfiguration#getNetbiosLocalAddress()
  */
-@FileOption.Name("smb:netbios.LocalAddress")
+@FileOption.Name("smb:netbios.localAddress")
 @JcifsngOption.Name("jcifs.netbios.laddr")
 public class NetbiosLocalAddress extends JcifsngStringOption {
 

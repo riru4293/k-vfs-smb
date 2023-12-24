@@ -130,7 +130,7 @@ class NetbiosLocalAddressTest extends AbstractOptionTest {
 
         var instance = new NetbiosLocalAddress.Resolver().newInstance(Json.createValue("127.0.0.1"));
 
-        assertThat(instance).returns("smb:netbios.LocalAddress", FileOption::getName)
+        assertThat(instance).returns("smb:netbios.localAddress", FileOption::getName)
                 .returns(expectValue, FileOption::getValue);
 
     }
@@ -147,7 +147,7 @@ class NetbiosLocalAddressTest extends AbstractOptionTest {
 
         var result = instance.toString();
 
-        assertThat(result).isEqualTo("{\"smb:netbios.LocalAddress\":\"127.0.0.1\"}");
+        assertThat(result).isEqualTo("{\"smb:netbios.localAddress\":\"127.0.0.1\"}");
 
     }
 }
