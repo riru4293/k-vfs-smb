@@ -29,7 +29,6 @@ import jakarta.json.Json;
 import jakarta.json.JsonValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,45 +39,6 @@ import org.junit.jupiter.api.Test;
  * @since 1.0.0
  */
 class JcifsngStringOptionTest {
-
-    /**
-     * Test constructor. If argument is valid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue() {
-
-        assertThatCode(() -> new Impl(Json.createValue("string"))).doesNotThrowAnyException();
-    }
-
-    /**
-     * Test constructor. If argument is invalid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue_InvalidArgument() {
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.NULL))
-                .withMessage("Must be JSON string.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.TRUE))
-                .withMessage("Must be JSON string.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.FALSE))
-                .withMessage("Must be JSON string.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_ARRAY))
-                .withMessage("Must be JSON string.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_OBJECT))
-                .withMessage("Must be JSON string.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(Json.createValue(0)))
-                .withMessage("Must be JSON string.");
-        
-    }
 
     /**
      * Test constructor. If argument is valid {@code String}.
@@ -97,13 +57,13 @@ class JcifsngStringOptionTest {
      */
     @Test
     void testGetValue() {
-        
+
         JsonValue expect = Json.createValue("hello");
-        
+
         var instance = new Impl("hello");
-        
+
         assertThat(instance.getValue()).isEqualTo(expect);
-        
+
     }
 
     /**
@@ -113,20 +73,16 @@ class JcifsngStringOptionTest {
      */
     @Test
     void testGetValueAsText() {
-        
+
         var instance = new Impl("hello");
-        
+
         assertThat(instance.getValueAsText()).isEqualTo("hello");
-        
+
     }
 
     class Impl extends JcifsngStringOption {
 
         public Impl(String value) {
-            super(value);
-        }
-
-        public Impl(JsonValue value) {
             super(value);
         }
 

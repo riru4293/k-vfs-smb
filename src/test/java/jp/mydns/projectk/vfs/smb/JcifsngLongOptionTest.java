@@ -27,10 +27,8 @@ package jp.mydns.projectk.vfs.smb;
 
 import jakarta.json.Json;
 import jakarta.json.JsonValue;
-import java.math.BigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -41,60 +39,6 @@ import org.junit.jupiter.api.Test;
  * @since 1.0.0
  */
 class JcifsngLongOptionTest {
-
-    /**
-     * Test constructor. If argument is valid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue() {
-
-        assertThatCode(() -> new Impl(Json.createValue(0))).doesNotThrowAnyException();
-
-    }
-
-    /**
-     * Test constructor. If argument is invalid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue_InvalidArgument() {
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.NULL))
-                .withMessage("Must be convertible to type long.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.TRUE))
-                .withMessage("Must be convertible to type long.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.FALSE))
-                .withMessage("Must be convertible to type long.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_ARRAY))
-                .withMessage("Must be convertible to type long.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_OBJECT))
-                .withMessage("Must be convertible to type long.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(Json.createValue("")))
-                .withMessage("Must be convertible to type long.");
-
-    }
-
-    /**
-     * Test constructor. If argument too large as {@code long}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue_TooLarge() {
-
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Impl(Json.createValue(BigDecimal.valueOf(Long.MAX_VALUE).add(BigDecimal.ONE))))
-                .withMessage("Must be convertible to type long.");
-
-    }
 
     /**
      * Test constructor. If argument is valid {@code long}.
@@ -141,10 +85,6 @@ class JcifsngLongOptionTest {
     class Impl extends JcifsngLongOption {
 
         public Impl(long value) {
-            super(value);
-        }
-
-        public Impl(JsonValue value) {
             super(value);
         }
 

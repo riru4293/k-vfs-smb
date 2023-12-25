@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireString;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -57,11 +58,11 @@ public class NetbiosBroadcastAddress extends JcifsngStringOption {
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} type is not {@code JsonString}.
+     * @throws IllegalArgumentException if {@code value} is not convertible to {@code String}
      * @since 1.0.0
      */
     public NetbiosBroadcastAddress(JsonValue value) {
-        super(value);
+        this(requireString(value, "smb:netbios.broadcastAddress"));
     }
 
     /**

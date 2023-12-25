@@ -51,18 +51,18 @@ import org.apache.commons.vfs2.FileSystemOptions;
  */
 @FileOption.Name("smb:maxVersion")
 @JcifsngOption.Name("jcifs.smb.client.maxVersion")
-public class MaximumVersion extends DiarectVersion {
+public class MaximumVersion extends JcifsngDialectVersionOption {
 
     /**
      * Constructor.
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is no contains in the {@link DialectVersion}
+     * @throws IllegalArgumentException if {@code value} is not convertible to {@link DialectVersion}
      * @since 1.0.0
      */
     public MaximumVersion(JsonValue value) {
-        super(value);
+        super(value, "smb:maxVersion");
     }
 
     /**
@@ -70,10 +70,9 @@ public class MaximumVersion extends DiarectVersion {
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is no contains in the {@link DialectVersion}
      * @since 1.0.0
      */
-    public MaximumVersion(String value) {
+    public MaximumVersion(DialectVersion value) {
         super(value);
     }
 

@@ -57,14 +57,14 @@ class MinimumVersionTest extends AbstractOptionTest {
     }
 
     /**
-     * Test constructor. If argument is valid {@code String}.
+     * Test constructor. If argument is valid {@code DialectVersion}.
      *
      * @since 1.0.0
      */
     @Test
-    void testConstructor_String() {
+    void testConstructor_DialectVersion() {
 
-        var instance = new MinimumVersion("SMB1");
+        var instance = new MinimumVersion(DialectVersion.SMB1);
 
         assertThat(instance.getValueAsText()).isEqualTo("SMB1");
     }
@@ -94,9 +94,9 @@ class MinimumVersionTest extends AbstractOptionTest {
     @Test
     void testEqualsHashCode() {
 
-        MinimumVersion base = new MinimumVersion("SMB1");
-        MinimumVersion same = new MinimumVersion("SMB1");
-        MinimumVersion another = new MinimumVersion("SMB300");
+        MinimumVersion base = new MinimumVersion(DialectVersion.SMB1);
+        MinimumVersion same = new MinimumVersion(DialectVersion.SMB1);
+        MinimumVersion another = new MinimumVersion(DialectVersion.SMB300);
 
         assertThat(base).hasSameHashCodeAs(same).isEqualTo(same)
                 .doesNotHaveSameHashCodeAs(another).isNotEqualTo(another);
@@ -130,7 +130,7 @@ class MinimumVersionTest extends AbstractOptionTest {
 
         String expect = Json.createObjectBuilder().add("smb:minVersion", "SMB1").build().toString();
 
-        var instance = new MinimumVersion("SMB1");
+        var instance = new MinimumVersion(DialectVersion.SMB1);
 
         var result = instance.toString();
 

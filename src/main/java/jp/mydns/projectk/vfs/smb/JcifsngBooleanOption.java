@@ -57,33 +57,6 @@ public abstract class JcifsngBooleanOption extends JcifsngOption {
     }
 
     /**
-     * Constructor.
-     *
-     * @param value option value
-     * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is not {@code JsonValue.TRUE} or {@code JsonValue.FALSE}
-     * @since 1.0.0
-     */
-    protected JcifsngBooleanOption(JsonValue value) {
-
-        switch (value.getValueType()) {
-
-            case TRUE:
-                this.value = true;
-                break;
-
-            case FALSE:
-                this.value = false;
-                break;
-
-            default:
-                throw new IllegalArgumentException("Must be JSON boolean.");
-
-        }
-
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @since 1.0.0

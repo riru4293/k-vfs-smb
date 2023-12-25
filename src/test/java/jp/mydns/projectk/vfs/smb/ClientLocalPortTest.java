@@ -119,7 +119,7 @@ class ClientLocalPortTest extends AbstractOptionTest {
 
         var instance = new ClientLocalPort.Resolver().newInstance(Json.createValue(Integer.MAX_VALUE));
 
-        assertThat(instance).returns("smb:client.lport", FileOption::getName)
+        assertThat(instance).returns("smb:client.localPort", FileOption::getName)
                 .returns(expectValue, FileOption::getValue);
 
     }
@@ -132,7 +132,7 @@ class ClientLocalPortTest extends AbstractOptionTest {
     @Test
     void testToString() {
 
-        String expect = Json.createObjectBuilder().add("smb:client.lport", 100).build().toString();
+        String expect = Json.createObjectBuilder().add("smb:client.localPort", 100).build().toString();
 
         var instance = new ClientLocalPort(100);
 

@@ -25,9 +25,11 @@
  */
 package jp.mydns.projectk.vfs.smb;
 
+import jakarta.json.Json;
 import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
-import java.util.List;
+import java.util.Objects;
+import static java.util.stream.Collectors.joining;
 import java.util.stream.Stream;
 import jcifs.DialectVersion;
 import org.apache.commons.vfs2.FileSystemOptions;
@@ -46,52 +48,74 @@ import org.apache.commons.vfs2.FileSystemOptions;
  * @version 1.0.0
  * @since 1.0.0
  */
-abstract class DiarectVersion extends JcifsngStringOption {
+abstract class JcifsngDialectVersionOption extends JcifsngOption {
+
+    private final DialectVersion value;
 
     /**
      * Constructor.
      *
      * @param value option value
-     * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is no contains in the
-     * {@link DialectVersion}
+     * @param optionName name of {@code FileOption}. Used in message if occurs {@code IllegalArgumentException}
+     * @throws NullPointerException if any argument is {@code null}
+     * @throws IllegalArgumentException if {@code value} is not convertible to {@link DialectVersion}
      * @since 1.0.0
      */
-    protected DiarectVersion(JsonValue value) {
+    protected JcifsngDialectVersionOption(JsonValue value, String optionName) {
 
-        super(value);
+        Objects.requireNonNull(value);
+        Objects.requireNonNull(optionName);
 
-        requireValidDiarect(JsonString.class.cast(value).getString());
+        try {
 
-    }
+            this.value = DialectVersion.valueOf(JsonString.class.cast(value).getString());
 
-    /**
-     * Constructor.
-     *
-     * @param value option value
-     * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is no contains in the
-     * {@link DialectVersion}
-     * @since 1.0.0
-     */
-    protected DiarectVersion(String value) {
+        } catch (ClassCastException | IllegalArgumentException ex) {
 
-        super(value);
+            String availables = Stream.of(DialectVersion.values()).map(Enum::name).collect(joining(", "));
 
-        requireValidDiarect(value);
-
-    }
-
-    private void requireValidDiarect(String value) {
-
-        List<String> diarects = Stream.of(DialectVersion.values()).map(Enum::name).sorted().toList();
-
-        if (diarects.stream().noneMatch(value::equals)) {
-
-            throw new IllegalArgumentException("[%s] is illegal dialect version. Possible values are %s."
-                    .formatted(value, diarects));
+            throw new IllegalArgumentException("FileOption value of [%s] must be either [%s]."
+                    .formatted(optionName, availables));
 
         }
 
     }
+
+    /**
+     * Constructor.
+     *
+     * @param value option value
+     * @throws NullPointerException if {@code value} is {@code null}
+     * @since 1.0.0
+     */
+    protected JcifsngDialectVersionOption(DialectVersion value) {
+
+        this.value = Objects.requireNonNull(value);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0
+     */
+    @Override
+    protected String getValueAsText() {
+
+        return value.name();
+
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0
+     */
+    @Override
+    public JsonValue getValue() {
+
+        return Json.createValue(value.name());
+
+    }
+
 }

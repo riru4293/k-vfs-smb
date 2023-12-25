@@ -31,6 +31,7 @@ import java.net.InetAddress;
 import jp.mydns.projectk.vfs.FileOption;
 import org.apache.commons.vfs2.FileSystemOptions;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -54,6 +55,19 @@ class ClientLocalAddressTest extends AbstractOptionTest {
         JsonValue expext = Json.createValue("localhost");
 
         assertThat(new ClientLocalAddress(src).getValue()).isEqualTo(expext);
+
+    }
+
+    /**
+     * Test constructor. If argument is illegal {@code JsonValue}.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testConstructor_IllegalJsonValue() {
+
+        assertThatIllegalArgumentException().isThrownBy(() -> new ClientLocalAddress(JsonValue.NULL))
+                .withMessage("FileOption value of [%s] must be string.", "smb:client.localAddress");
 
     }
 

@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireInt;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -48,7 +49,7 @@ import org.apache.commons.vfs2.FileSystemOptions;
  * @since 1.0.0
  * @see BaseConfiguration#getLocalPort()
  */
-@FileOption.Name("smb:client.lport")
+@FileOption.Name("smb:client.localPort")
 @JcifsngOption.Name("jcifs.smb.client.lport")
 public class ClientLocalPort extends JcifsngIntOption {
 
@@ -61,7 +62,7 @@ public class ClientLocalPort extends JcifsngIntOption {
      * @since 1.0.0
      */
     public ClientLocalPort(JsonValue value) {
-        super(value);
+        this(requireInt(value, "smb:client.localPort"));
     }
 
     /**

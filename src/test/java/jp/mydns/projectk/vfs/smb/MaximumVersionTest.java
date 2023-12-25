@@ -57,14 +57,14 @@ class MaximumVersionTest extends AbstractOptionTest {
     }
 
     /**
-     * Test constructor. If argument is valid {@code String}.
+     * Test constructor. If argument is valid {@code DialectVersion}.
      *
      * @since 1.0.0
      */
     @Test
-    void testConstructor_String() {
+    void testConstructor_DialectVersion() {
 
-        var instance = new MaximumVersion("SMB1");
+        var instance = new MaximumVersion(DialectVersion.SMB1);
 
         assertThat(instance.getValueAsText()).isEqualTo("SMB1");
     }
@@ -94,9 +94,9 @@ class MaximumVersionTest extends AbstractOptionTest {
     @Test
     void testEqualsHashCode() {
 
-        MaximumVersion base = new MaximumVersion("SMB1");
-        MaximumVersion same = new MaximumVersion("SMB1");
-        MaximumVersion another = new MaximumVersion("SMB300");
+        MaximumVersion base = new MaximumVersion(DialectVersion.SMB1);
+        MaximumVersion same = new MaximumVersion(DialectVersion.SMB1);
+        MaximumVersion another = new MaximumVersion(DialectVersion.SMB300);
 
         assertThat(base).hasSameHashCodeAs(same).isEqualTo(same)
                 .doesNotHaveSameHashCodeAs(another).isNotEqualTo(another);
@@ -130,7 +130,7 @@ class MaximumVersionTest extends AbstractOptionTest {
 
         String expect = Json.createObjectBuilder().add("smb:maxVersion", "SMB1").build().toString();
 
-        var instance = new MaximumVersion("SMB1");
+        var instance = new MaximumVersion(DialectVersion.SMB1);
 
         var result = instance.toString();
 

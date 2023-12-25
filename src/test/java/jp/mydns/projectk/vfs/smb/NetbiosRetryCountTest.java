@@ -30,6 +30,7 @@ import jakarta.json.JsonValue;
 import jp.mydns.projectk.vfs.FileOption;
 import org.apache.commons.vfs2.FileSystemOptions;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,6 +52,19 @@ class NetbiosRetryCountTest extends AbstractOptionTest {
 
         assertThat(new NetbiosRetryCount(Json.createValue(-1)).getValue()).isEqualTo(Json.createValue(-1));
         assertThat(new NetbiosRetryCount(Json.createValue(9)).getValue()).isEqualTo(Json.createValue(9));
+
+    }
+
+    /**
+     * Test constructor. If argument is illegal {@code JsonValue}.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testConstructor_IllegalJsonValue() {
+
+        assertThatIllegalArgumentException().isThrownBy(() -> new NetbiosRetryCount(JsonValue.NULL))
+                .withMessage("FileOption value of [%s] must be int.", "smb:netbios.retryCount");
 
     }
 

@@ -27,18 +27,20 @@ package jp.mydns.projectk.vfs.smb;
 
 import jakarta.json.Json;
 import jakarta.json.JsonValue;
+import jcifs.DialectVersion;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test of class DiarectVersionTest.
+ * Test of class JcifsngDialectVersionOptionTest.
  *
  * @author riru
  * @version 1.0.0
  * @since 1.0.0
  */
-class DiarectVersionTest {
+class JcifsngDialectVersionOptionTest {
 
     /**
      * Test constructor. If argument is valid {@code JsonValue}.
@@ -59,37 +61,54 @@ class DiarectVersionTest {
     @Test
     void testConstructor_JsonValue_InvalidArgument() {
         assertThatIllegalArgumentException().isThrownBy(() -> new Impl(Json.createValue("SMB0")))
-                .withMessage("[SMB0] is illegal dialect version. Possible values are [SMB1, SMB202, SMB210, SMB300, SMB302, SMB311].");
+                .withMessage("FileOption value of [X] must be either [SMB1, SMB202, SMB210, SMB300, SMB302, SMB311].");
     }
 
     /**
-     * Test constructor. If argument is valid {@code String}.
+     * Test constructor. If argument is valid {@code DialectVersion}.
      *
      * @since 1.0.0
      */
     @Test
     void testConstructor_String() {
-        assertThatCode(() -> new Impl("SMB1")).doesNotThrowAnyException();
+        assertThatCode(() -> new Impl(DialectVersion.SMB1)).doesNotThrowAnyException();
     }
 
     /**
-     * Test constructor. If argument is invalid {@code String}.
+     * Test of getValue method.
      *
      * @since 1.0.0
      */
     @Test
-    void testConstructor_String_InvalidArgument() {
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl("SMB0"))
-                .withMessage("[SMB0] is illegal dialect version. Possible values are [SMB1, SMB202, SMB210, SMB300, SMB302, SMB311].");
+    void testGetValue() {
+
+        var instance = new Impl(DialectVersion.SMB202);
+
+        assertThat(instance.getValue()).isEqualTo(Json.createValue("SMB202"));
+
     }
 
-    private class Impl extends DiarectVersion {
+    /**
+     * Test of getValueAsText method.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testGetValueAsText() {
+
+        var instance = new Impl(DialectVersion.SMB202);
+
+        assertThat(instance.getValueAsText()).isEqualTo("SMB202");
+
+    }
+
+    private class Impl extends JcifsngDialectVersionOption {
 
         public Impl(JsonValue value) {
-            super(value);
+            super(value, "X");
         }
 
-        public Impl(String value) {
+        public Impl(DialectVersion value) {
             super(value);
         }
 

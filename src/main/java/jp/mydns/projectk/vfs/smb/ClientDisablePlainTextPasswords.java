@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireBoolean;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -57,10 +58,11 @@ public class ClientDisablePlainTextPasswords extends JcifsngBooleanOption {
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
+     * @throws IllegalArgumentException if {@code value} is not {@code JsonValue.TRUE} or {@code JsonValue.FALSE}
      * @since 1.0.0
      */
     public ClientDisablePlainTextPasswords(JsonValue value) {
-        super(value);
+        this(requireBoolean(value, "smb:client.disablePlainTextPasswords"));
     }
 
     /**
@@ -114,10 +116,9 @@ public class ClientDisablePlainTextPasswords extends JcifsngBooleanOption {
      * Implementation requirements.
      * <ul>
      * <li>This class is immutable and thread-safe.</li>
-     * <li>Implementations of this interface must be able to construct instances
-     * using {@link ServiceLoader}.</li>
-     * <li>This class must be able to construct an instance of
-     * {@code FileOption} from the JSON representing {@code FileOption}.</li>
+     * <li>Implementations of this interface must be able to construct instances using {@link ServiceLoader}.</li>
+     * <li>This class must be able to construct an instance of {@code FileOption} from the JSON representing
+     * {@code FileOption}.</li>
      * </ul>
      *
      * @author riru

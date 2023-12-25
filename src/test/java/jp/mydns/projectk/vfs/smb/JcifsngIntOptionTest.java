@@ -29,7 +29,6 @@ import jakarta.json.Json;
 import jakarta.json.JsonValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,60 +39,6 @@ import org.junit.jupiter.api.Test;
  * @since 1.0.0
  */
 class JcifsngIntOptionTest {
-
-    /**
-     * Test constructor. If argument is valid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue() {
-
-        assertThatCode(() -> new Impl(Json.createValue(0))).doesNotThrowAnyException();
-
-    }
-
-    /**
-     * Test constructor. If argument is invalid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue_InvalidArgument() {
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.NULL))
-                .withMessage("Must be convertible to type int.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.TRUE))
-                .withMessage("Must be convertible to type int.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.FALSE))
-                .withMessage("Must be convertible to type int.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_ARRAY))
-                .withMessage("Must be convertible to type int.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_OBJECT))
-                .withMessage("Must be convertible to type int.");
-
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(Json.createValue("")))
-                .withMessage("Must be convertible to type int.");
-
-    }
-
-    /**
-     * Test constructor. If argument too large as {@code int}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue_TooLarge() {
-
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Impl(Json.createValue(Long.valueOf(Integer.MAX_VALUE) + 1)))
-                .withMessage("Must be convertible to type int.");
-
-    }
 
     /**
      * Test constructor. If argument is valid {@code int}.
@@ -140,10 +85,6 @@ class JcifsngIntOptionTest {
     class Impl extends JcifsngIntOption {
 
         public Impl(int value) {
-            super(value);
-        }
-
-        public Impl(JsonValue value) {
             super(value);
         }
 

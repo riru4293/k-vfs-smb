@@ -30,6 +30,7 @@ import jakarta.json.JsonValue;
 import jp.mydns.projectk.vfs.FileOption;
 import org.apache.commons.vfs2.FileSystemOptions;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,6 +52,19 @@ class ClientDfsTtlTest extends AbstractOptionTest {
 
         assertThat(new ClientDfsTtl(Json.createValue(-1L)).getValue()).isEqualTo(Json.createValue(-1L));
         assertThat(new ClientDfsTtl(Json.createValue(9L)).getValue()).isEqualTo(Json.createValue(9L));
+
+    }
+
+    /**
+     * Test constructor. If argument is illegal {@code JsonValue}.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testConstructor_IllegalJsonValue() {
+
+        assertThatIllegalArgumentException().isThrownBy(() -> new ClientDfsTtl(JsonValue.NULL))
+                .withMessage("FileOption value of [%s] must be long.", "smb:client.dfsTtl");
 
     }
 

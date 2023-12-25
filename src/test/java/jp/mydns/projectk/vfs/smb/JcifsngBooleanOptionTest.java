@@ -25,11 +25,9 @@
  */
 package jp.mydns.projectk.vfs.smb;
 
-import jakarta.json.Json;
 import jakarta.json.JsonValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -42,56 +40,17 @@ import org.junit.jupiter.api.Test;
 class JcifsngBooleanOptionTest {
 
     /**
-     * Test constructor. If argument is valid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue() {
-
-        assertThatCode(() -> new Impl(JsonValue.TRUE)).doesNotThrowAnyException();
-        
-        assertThatCode(() -> new Impl(JsonValue.FALSE)).doesNotThrowAnyException();
-        
-    }
-
-    /**
-     * Test constructor. If argument is invalid {@code JsonValue}.
-     *
-     * @since 1.0.0
-     */
-    @Test
-    void testConstructor_JsonValue_InvalidArgument() {
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.NULL))
-                .withMessage("Must be JSON boolean.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_ARRAY))
-                .withMessage("Must be JSON boolean.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(JsonValue.EMPTY_JSON_OBJECT))
-                .withMessage("Must be JSON boolean.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(Json.createValue(0)))
-                .withMessage("Must be JSON boolean.");
-        
-        assertThatIllegalArgumentException().isThrownBy(() -> new Impl(Json.createValue("")))
-                .withMessage("Must be JSON boolean.");
-        
-    }
-
-    /**
      * Test constructor. If argument is valid {@code boolean}.
      *
      * @since 1.0.0
      */
     @Test
     void testConstructor_boolean() {
-        
+
         assertThatCode(() -> new Impl(true)).doesNotThrowAnyException();
-        
+
         assertThatCode(() -> new Impl(false)).doesNotThrowAnyException();
-        
+
     }
 
     /**
@@ -101,13 +60,13 @@ class JcifsngBooleanOptionTest {
      */
     @Test
     void testGetValue_true() {
-        
+
         JsonValue expect = JsonValue.TRUE;
-        
+
         var instance = new Impl(true);
-        
+
         assertThat(instance.getValue()).isEqualTo(expect);
-        
+
     }
 
     /**
@@ -117,13 +76,13 @@ class JcifsngBooleanOptionTest {
      */
     @Test
     void testGetValue_false() {
-        
+
         JsonValue expect = JsonValue.FALSE;
-        
+
         var instance = new Impl(false);
-        
+
         assertThat(instance.getValue()).isEqualTo(expect);
-        
+
     }
 
     /**
@@ -133,23 +92,19 @@ class JcifsngBooleanOptionTest {
      */
     @Test
     void testGetValueAsText() {
-        
+
         var trueInstance = new Impl(true);
         var falseInstance = new Impl(false);
-        
+
         assertThat(trueInstance.getValueAsText()).isEqualTo("true");
-        
+
         assertThat(falseInstance.getValueAsText()).isEqualTo("false");
-        
+
     }
 
     class Impl extends JcifsngBooleanOption {
 
         public Impl(boolean value) {
-            super(value);
-        }
-
-        public Impl(JsonValue value) {
             super(value);
         }
 

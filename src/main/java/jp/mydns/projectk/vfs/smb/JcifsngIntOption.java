@@ -26,7 +26,6 @@
 package jp.mydns.projectk.vfs.smb;
 
 import jakarta.json.Json;
-import jakarta.json.JsonNumber;
 import jakarta.json.JsonValue;
 import org.apache.commons.vfs2.FileSystemOptions;
 
@@ -56,28 +55,6 @@ public abstract class JcifsngIntOption extends JcifsngOption {
      */
     protected JcifsngIntOption(int value) {
         this.value = value;
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param value option value
-     * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is not convertible to type {@code int}
-     * @since 1.0.0
-     */
-    protected JcifsngIntOption(JsonValue value) {
-
-        try {
-
-            this.value = JsonNumber.class.cast(value).intValueExact();
-
-        } catch (ClassCastException | ArithmeticException ex) {
-
-            throw new IllegalArgumentException("Must be convertible to type int.", ex);
-
-        }
-
     }
 
     /**

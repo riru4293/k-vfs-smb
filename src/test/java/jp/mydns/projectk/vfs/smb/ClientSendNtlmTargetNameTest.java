@@ -30,6 +30,7 @@ import jakarta.json.JsonValue;
 import jp.mydns.projectk.vfs.FileOption;
 import org.apache.commons.vfs2.FileSystemOptions;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,6 +52,19 @@ class ClientSendNtlmTargetNameTest extends AbstractOptionTest {
 
         assertThat(new ClientSendNtlmTargetName(JsonValue.TRUE).getValue()).isEqualTo(JsonValue.TRUE);
         assertThat(new ClientSendNtlmTargetName(JsonValue.FALSE).getValue()).isEqualTo(JsonValue.FALSE);
+
+    }
+
+    /**
+     * Test constructor. If argument is illegal {@code JsonValue}.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testConstructor_IllegalJsonValue() {
+
+        assertThatIllegalArgumentException().isThrownBy(() -> new ClientSendNtlmTargetName(JsonValue.NULL))
+                .withMessage("FileOption value of [%s] must be boolean.", "smb:client.sendNtlmTargetName");
 
     }
 
@@ -116,7 +130,7 @@ class ClientSendNtlmTargetNameTest extends AbstractOptionTest {
 
         var instance = new ClientSendNtlmTargetName.Resolver().newInstance(JsonValue.FALSE);
 
-        assertThat(instance).returns("smb:client.SendNtlmTargetName", FileOption::getName)
+        assertThat(instance).returns("smb:client.sendNtlmTargetName", FileOption::getName)
                 .returns(JsonValue.FALSE, FileOption::getValue);
 
     }
@@ -129,7 +143,7 @@ class ClientSendNtlmTargetNameTest extends AbstractOptionTest {
     @Test
     void testToString() {
 
-        String expect = Json.createObjectBuilder().add("smb:client.SendNtlmTargetName", JsonValue.TRUE).build().toString();
+        String expect = Json.createObjectBuilder().add("smb:client.sendNtlmTargetName", JsonValue.TRUE).build().toString();
 
         var instance = new ClientSendNtlmTargetName(true);
 

@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireLong;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -57,11 +58,11 @@ public class ClientAttributeCacheTimeout extends JcifsngLongOption {
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is not convertible to type {@code int}
+     * @throws IllegalArgumentException if {@code value} is not convertible to type {@code long}
      * @since 1.0.0
      */
     public ClientAttributeCacheTimeout(JsonValue value) {
-        super(value);
+        this(requireLong(value, "smb:client.attributeCacheTimeout"));
     }
 
     /**

@@ -30,8 +30,10 @@ import jakarta.json.JsonValue;
 import java.util.List;
 import java.util.Objects;
 import java.util.ServiceLoader;
+import static java.util.stream.Collectors.joining;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireStringList;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -51,19 +53,20 @@ import org.apache.commons.vfs2.FileSystemOptions;
  */
 @FileOption.Name("smb:netbios.wins")
 @JcifsngOption.Name("jcifs.netbios.wins")
-public class NetbiosWins extends JcifsngStringArrayOption {
+public class NetbiosWins extends JcifsngOption {
+
+    private final List<String> values;
 
     /**
      * Constructor.
      *
      * @param values option values
      * @throws NullPointerException if {@code values} is {@code null}
-     * @throws IllegalArgumentException if {@code values} type is not {@code JsonArray} or if element type of
-     * {@code values} is not {@code JsonString}.
+     * @throws IllegalArgumentException if {@code values} is not convertible to type {@code List<String>}
      * @since 1.0.0
      */
     public NetbiosWins(JsonValue values) {
-        super(values);
+        this.values = requireStringList(Objects.requireNonNull(values), "smb:netbios.wins");
     }
 
     /**
@@ -74,7 +77,27 @@ public class NetbiosWins extends JcifsngStringArrayOption {
      * @since 1.0.0
      */
     public NetbiosWins(List<String> values) {
-        super(values);
+        this.values = List.copyOf(Objects.requireNonNull(values));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0
+     */
+    @Override
+    protected String getValueAsText() {
+        return values.stream().collect(joining(","));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0
+     */
+    @Override
+    public JsonValue getValue() {
+        return Json.createArrayBuilder(values).build();
     }
 
     /**

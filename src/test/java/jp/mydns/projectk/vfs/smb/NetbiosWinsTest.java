@@ -32,6 +32,7 @@ import java.util.List;
 import jp.mydns.projectk.vfs.FileOption;
 import org.apache.commons.vfs2.FileSystemOptions;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -54,6 +55,19 @@ class NetbiosWinsTest extends AbstractOptionTest {
         JsonValue expext = Json.createArrayBuilder().add("localhost").add("127.0.0.1").build();
 
         assertThat(new NetbiosWins(expext).getValue()).isEqualTo(expext);
+
+    }
+
+    /**
+     * Test constructor. If argument is illegal {@code JsonValue}.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testConstructor_IllegalJsonValue() {
+
+        assertThatIllegalArgumentException().isThrownBy(() -> new NetbiosWins(JsonValue.NULL))
+                .withMessage("FileOption value of [%s] must be list of string.", "smb:netbios.wins");
 
     }
 
@@ -98,6 +112,36 @@ class NetbiosWinsTest extends AbstractOptionTest {
 
         falseInstance.apply(fsOpts);
         assertThat(toPropertyConfiguration(fsOpts).getWinsServers()).containsExactly(InetAddress.getByName("localhost"));
+
+    }
+
+    /**
+     * Test of getValue method.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testGetValue() {
+
+        JsonValue expect = Json.createArrayBuilder().add("hello").add("world").build();
+
+        var instance = new NetbiosWins(List.of("hello", "world"));
+
+        assertThat(instance.getValue()).isEqualTo(expect);
+
+    }
+
+    /**
+     * Test of getValueAsText method.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testGetValueAsText() {
+
+        var instance = new NetbiosWins(List.of("hello", "world"));
+
+        assertThat(instance.getValueAsText()).isEqualTo("hello,world");
 
     }
 

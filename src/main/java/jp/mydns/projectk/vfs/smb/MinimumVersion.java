@@ -51,18 +51,18 @@ import org.apache.commons.vfs2.FileSystemOptions;
  */
 @FileOption.Name("smb:minVersion")
 @JcifsngOption.Name("jcifs.smb.client.minVersion")
-public class MinimumVersion extends DiarectVersion {
+public class MinimumVersion extends JcifsngDialectVersionOption {
 
     /**
      * Constructor.
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is no contains in the {@link DialectVersion}
+     * @throws IllegalArgumentException if {@code value} is not convertible to {@link DialectVersion}
      * @since 1.0.0
      */
     public MinimumVersion(JsonValue value) {
-        super(value);
+        super(value, "smb:minVersion");
     }
 
     /**
@@ -70,10 +70,9 @@ public class MinimumVersion extends DiarectVersion {
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} is no contains in the {@link DialectVersion}
      * @since 1.0.0
      */
-    public MinimumVersion(String value) {
+    public MinimumVersion(DialectVersion value) {
         super(value);
     }
 

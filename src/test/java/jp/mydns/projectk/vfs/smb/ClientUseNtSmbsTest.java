@@ -30,6 +30,7 @@ import jakarta.json.JsonValue;
 import jp.mydns.projectk.vfs.FileOption;
 import org.apache.commons.vfs2.FileSystemOptions;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,6 +52,19 @@ class ClientUseNtSmbsTest extends AbstractOptionTest {
 
         assertThat(new ClientUseNtSmbs(JsonValue.TRUE).getValue()).isEqualTo(JsonValue.TRUE);
         assertThat(new ClientUseNtSmbs(JsonValue.FALSE).getValue()).isEqualTo(JsonValue.FALSE);
+
+    }
+
+    /**
+     * Test constructor. If argument is illegal {@code JsonValue}.
+     *
+     * @since 1.0.0
+     */
+    @Test
+    void testConstructor_IllegalJsonValue() {
+
+        assertThatIllegalArgumentException().isThrownBy(() -> new ClientUseNtSmbs(JsonValue.NULL))
+                .withMessage("FileOption value of [%s] must be boolean.", "smb:client.useNtSmbs");
 
     }
 

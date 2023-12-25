@@ -26,9 +26,7 @@
 package jp.mydns.projectk.vfs.smb;
 
 import jakarta.json.Json;
-import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
-import static jakarta.json.JsonValue.ValueType.STRING;
 import java.util.Objects;
 import org.apache.commons.vfs2.FileSystemOptions;
 
@@ -59,28 +57,6 @@ public abstract class JcifsngStringOption extends JcifsngOption {
      */
     protected JcifsngStringOption(String value) {
         this.value = Objects.requireNonNull(value);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param value option value
-     * @throws NullPointerException if {@code value} is {@code null}
-     * @throws IllegalArgumentException if {@code value} type is not {@code JsonString}
-     * @since 1.0.0
-     */
-    protected JcifsngStringOption(JsonValue value) {
-
-        if (value.getValueType() == STRING) {
-
-            this.value = JsonString.class.cast(value).getString();
-
-        } else {
-
-            throw new IllegalArgumentException("Must be JSON string.");
-
-        }
-
     }
 
     /**

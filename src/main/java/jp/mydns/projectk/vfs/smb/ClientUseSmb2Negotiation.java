@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireBoolean;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -48,7 +49,7 @@ import org.apache.commons.vfs2.FileSystemOptions;
  * @since 1.0.0
  * @see BaseConfiguration#isUseSMB2OnlyNegotiation()
  */
-@FileOption.Name("smb:client.useSMB2Negotiation")
+@FileOption.Name("smb:client.useSmb2Negotiation")
 @JcifsngOption.Name("jcifs.smb.client.useSMB2Negotiation")
 public class ClientUseSmb2Negotiation extends JcifsngBooleanOption {
 
@@ -57,10 +58,11 @@ public class ClientUseSmb2Negotiation extends JcifsngBooleanOption {
      *
      * @param value option value
      * @throws NullPointerException if {@code value} is {@code null}
+     * @throws IllegalArgumentException if {@code value} is not {@code JsonValue.TRUE} or {@code JsonValue.FALSE}
      * @since 1.0.0
      */
     public ClientUseSmb2Negotiation(JsonValue value) {
-        super(value);
+        this(requireBoolean(value, "smb:client.useSmb2Negotiation"));
     }
 
     /**

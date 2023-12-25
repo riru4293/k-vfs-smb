@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import jcifs.config.BaseConfiguration;
 import jp.mydns.projectk.vfs.FileOption;
+import static jp.mydns.projectk.vfs.FileOptionSourceValidator.requireInt;
 import org.apache.commons.vfs2.FileSystemOptions;
 
 /**
@@ -61,7 +62,7 @@ public class NetbiosRetryTimeout extends JcifsngIntOption {
      * @since 1.0.0
      */
     public NetbiosRetryTimeout(JsonValue value) {
-        super(value);
+        this(requireInt(value, "smb:netbios.retryTimeout"));
     }
 
     /**
